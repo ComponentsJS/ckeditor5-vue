@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md.
  */
 
@@ -25,11 +25,17 @@ module.exports = function getKarmaConfig() {
 					loader: 'babel-loader',
 					exclude: /node_modules/,
 					query: {
-						compact: false,
-						presets: [ '@babel/preset-env' ]
+						compact: false
 					}
 				}
 			]
+		},
+
+		resolve: {
+			alias: {
+				'vue': 'vue/dist/vue.esm-bundler.js',
+				'@vue/test-utils': '@vue/test-utils/dist/vue-test-utils.esm-bundler.js'
+			}
 		}
 	};
 
@@ -187,7 +193,7 @@ function parseArguments( args ) {
 			c: 'coverage',
 			r: 'reporter',
 			s: 'source-map',
-			w: 'watch',
+			w: 'watch'
 		},
 
 		default: {
@@ -195,7 +201,7 @@ function parseArguments( args ) {
 			reporter: 'mocha',
 			watch: false,
 			coverage: false,
-			'source-map': false,
+			'source-map': false
 		}
 	};
 

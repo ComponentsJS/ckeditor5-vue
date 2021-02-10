@@ -1,16 +1,14 @@
 /**
- * @license Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md.
+ * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
-
-'use strict';
 
 /* eslint-env node */
 
 const path = require( 'path' );
 const webpack = require( 'webpack' );
 const { bundler } = require( '@ckeditor/ckeditor5-dev-utils' );
-const UglifyJsWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
+const TerserPlugin = require( 'terser-webpack-plugin' );
 
 module.exports = {
 	mode: 'production',
@@ -28,14 +26,15 @@ module.exports = {
 
 	optimization: {
 		minimizer: [
-			new UglifyJsWebpackPlugin( {
+			new TerserPlugin( {
 				sourceMap: true,
-				uglifyOptions: {
+				terserOptions: {
 					output: {
 						// Preserve CKEditor 5 license comments.
 						comments: /^!/
 					}
-				}
+				},
+				extractComments: false
 			} )
 		]
 	},
@@ -44,7 +43,7 @@ module.exports = {
 		new webpack.BannerPlugin( {
 			banner: bundler.getLicenseBanner(),
 			raw: true
-		} ),
+		} )
 	],
 
 	module: {
@@ -52,8 +51,17 @@ module.exports = {
 			{
 				test: /\.js$/,
 				loader: 'babel-loader',
-				exclude: /node_modules/,
+				exclude: /node_modules/
 			}
 		]
 	},
+
+	externals: {
+		vue: {
+			commonjs: 'vue',
+			commonjs2: 'vue',
+			amd: 'vue',
+			root: 'Vue'
+		}
+	}
 };

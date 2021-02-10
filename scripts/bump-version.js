@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 /**
- * @license Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md.
  */
 
-'use strict';
+/* eslint-env node */
 
 require( '@ckeditor/ckeditor5-dev-env' )
 	.bumpVersions( {
